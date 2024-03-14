@@ -484,3 +484,4 @@ $RECYCLE.BIN/
 *.swp
 *.cache
 obj/Debug/net8.0/MilkShake.AssemblyInfo.cs
+*.user
