@@ -1,4 +1,11 @@
+using Swashbuckle.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using MilkShake.Data;
+
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<MilkShakeContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("MilkShakeContext") ?? throw new InvalidOperationException("Connection string 'MilkShakeContext' not found.")));
 
 // Add services to the container.
 
