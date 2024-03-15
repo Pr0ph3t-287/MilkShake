@@ -12,7 +12,7 @@ namespace MilkShake.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController(MilkShakeDbContext context) : ControllerBase
+    public class UsersEFController(MilkShakeDbContext context) : ControllerBase
     {
         private readonly MilkShakeDbContext _context = context;
 

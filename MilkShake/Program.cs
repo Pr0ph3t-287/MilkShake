@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MilkShake.Data;
+using MilkShake.UnitOfWork;
 using Swashbuckle.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,7 @@ builder.Services.AddDbContext<MilkShakeDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("MilkShakeContext") ?? throw new InvalidOperationException("Connection string 'MilkShakeContext' not found.")));
 
 // Add services to the container.
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
