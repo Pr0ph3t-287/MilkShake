@@ -64,10 +64,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "MilkShakeFront:build:production"
+              "buildTarget": "MilkShakeFront:build:production"
             },
             "development": {
-              "browserTarget": "MilkShakeFront:build:development"
+              "buildTarget": "MilkShakeFront:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -75,7 +75,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "MilkShakeFront:build"
+            "buildTarget": "MilkShakeFront:build"
           }
         },
         "test": {
