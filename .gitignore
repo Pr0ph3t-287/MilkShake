@@ -480,8 +480,35 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Angular Added
 # Vim temporary swap files
 *.swp
 *.cache
 obj/Debug/net8.0/MilkShake.AssemblyInfo.cs
 *.user
+
+# Node and NPM
+/node_modules
+
+# Compiled files
+/dist
+/tmp
+
+# Dependency directories
+/dependencies
+
+# IDE files
+/.idea
+/.vscode
+
+# Log files
+/*.log
+
+# Environment files
+.env
+.env.prod
+.env.dev
+
+# Miscellaneous
+.DS_Store
+Thumbs.db
