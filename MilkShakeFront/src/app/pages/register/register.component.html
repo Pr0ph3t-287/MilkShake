@@ -6,9 +6,9 @@
           class="img-fluid" alt="Sample image">
       </div>
       <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-        <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <form [formGroup]="loginForm" (ngSubmit)="register()">
           <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
-            <p class="lead fw-normal mb-0 me-3">Sign in</p>
+            <p class="lead fw-normal mb-0 me-3">Register</p>
           </div>
 
           <div class="divider d-flex align-items-center my-4">
@@ -37,23 +37,43 @@
             </div>
           </div>
 
-          <div class="d-flex justify-content-between align-items-center">
-            <!-- Checkbox -->
-            <div class="form-check mb-0">
-              <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
-              <label class="form-check-label" for="form2Example3">
-                Remember me
-              </label>
+          <!-- First Name input -->
+          <div class="form-outline mb-4">
+            <input matinput type="text" id="firstName" class="form-control form-control-lg"
+              placeholder="Enter first name" formControlName="firstName" required />
+            <label class="form-label" for="firstName">First name</label>
+            <div *ngIf="loginForm.get('firstName')?.invalid && (loginForm.get('firstName')?.dirty || loginForm.get('firstName')?.touched)" class="invalid">
+              <div *ngIf="loginForm.get('firstName')?.invalid">First name is required.</div>
             </div>
-            <a href="#!" class="text-body">Forgot password?</a>
           </div>
+          
+          <!-- Last Name input -->
+          <div class="form-outline mb-4">
+            <input matinput type="text" id="lastName" class="form-control form-control-lg"
+              placeholder="Enter last name" formControlName="lastName" required />
+            <label class="form-label" for="lastName">last name</label>
+            <div *ngIf="loginForm.get('lastName')?.invalid && (loginForm.get('lastName')?.dirty || loginForm.get('lastName')?.touched)" class="invalid">
+              <div *ngIf="loginForm.get('lastName')?.invalid">Last name is required.</div>
+            </div>
+          </div>
+
+          <!-- Date of Birth input -->
+          <div class="form-outline mb-4">
+            <input matinput type="date" id="dob" class="form-control form-control-lg"
+              placeholder="Enter date of birth" formControlName="dob" required />
+            <label class="form-label" for="dob">Date of Birth</label>
+            <div *ngIf="loginForm.get('dob')?.invalid && (loginForm.get('dob')?.dirty || loginForm.get('dob')?.touched)" class="invalid">
+              <div *ngIf="loginForm.get('dob')?.invalid">Date of Birth is required.</div>
+            </div>
+          </div>
+
 
           <div class="text-center text-lg-start mt-4 pt-2">
             <button type="submit" class="btn btn-primary btn-lg"
-            [disabled]="loginForm.get('password')?.invalid||loginForm.get('email')?.invalid"
-              style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
-            <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a [routerLink]="'/register'"
-                class="link-danger">Register</a></p>
+            [disabled]="loginForm.get('password')?.invalid||loginForm.get('email')?.invalid||loginForm.get('firstName')?.invalid||loginForm.get('lastName')?.invalid||loginForm.get('dob')?.invalid"
+              style="padding-left: 2.5rem; padding-right: 2.5rem;">Register</button>
+            <p class="small fw-bold mt-2 pt-1 mb-0"><a [routerLink]="'/login'"
+                class="link-danger">Back to login?</a></p>
           </div>
 
         </form>
