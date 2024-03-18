@@ -137,39 +137,9 @@
     <div class="row">
       <!-- Repeat this div as needed to fill empty space -->
       <div *ngFor="let shake of shakes" class="col-sm-3">
-        <div class="card mb-3">
-          <div class="card-body">
-            Content here
-            <!-- Consistency input -->
-          <div class="form-outline mb-3">
-            <select id="consistency" class="form-control form-select form-select-sm" formControlName="consistency" aria-label=".form-select-sm example">
-              <option value="" selected disabled>Choose consistency</option>
-              <option *ngFor="let consistency of consistencies" [value]="consistency.name">{{ consistency.name }}</option>
-            </select>
-            <label class="form-label" for="consistency">Consistency</label>
-          </div>
-
-          <!-- Flavor input -->
-          <div class="form-outline mb-3">
-            <select id="flavor" class="form-control form-select form-select-sm" formControlName="flavor" aria-label=".form-select-sm example">
-              <option value="" selected disabled>Choose flavor</option>
-              <option *ngFor="let flavor of flavors" [value]="flavor.name">{{ flavor.name }}</option>
-            </select>
-            <label class="form-label" for="flavor">Flavor</label>
-          </div>
-
-          <!-- Topping input -->
-          <div class="form-outline mb-3">
-            <select id="toppings" class="form-control form-select form-select-sm" formControlName="toppings" aria-label=".form-select-sm example">
-              <option value="" selected disabled>Choose toppings</option>
-              <option *ngFor="let topping of toppings" [value]="topping.name">{{ topping.name }}</option>
-            </select>
-            <label class="form-label" for="toppings">Toppings</label>
-          </div>
-          </div>
-        </div>
+        <app-milkshake-form [flavors]="flavors" [toppings]="toppings" [consistencies]="consistencies"></app-milkshake-form>
       </div>
-      <!-- End repeating div -->
+
     </div>
   </div>
 </section>

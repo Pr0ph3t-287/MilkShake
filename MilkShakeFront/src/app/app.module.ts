@@ -12,6 +12,7 @@ import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { OrderComponent } from './pages/order/order.component';
 import { ShakeService } from './services/shake.service';
+import { MilkshakeFormComponent } from './components/milkshake-form/milkshake-form.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { ShakeService } from './services/shake.service';
     LoginComponent,
     RegisterComponent,
     OrderComponent,
+    MilkshakeFormComponent,
   ],
   imports: [
     BrowserModule,
