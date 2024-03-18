@@ -39,21 +39,28 @@ export class MilkshakeFormComponent {
       this.shakeForm.get('consistency')?.valueChanges.subscribe(() => this.calculatePrice());
       this.shakeForm.get('toppings')?.valueChanges.subscribe(() => this.calculatePrice());
 
-      this.shakeForm.valueChanges.subscribe(() => this.shakeChange.emit(this.shake));
-
-      this.calculatePrice();
+      // this.shakeForm.valueChanges.subscribe(() => this.shakeChange.emit(this.shake));
     }
 
     calculatePrice() {
       // Get the values of the selected options
-      const flavor = this.shakeForm.get('flavor')?.value ?? 0;
-      const consistency = this.shakeForm.get('consistency')?.value ?? 0;
-      const toppings = this.shakeForm.get('toppings')?.value ?? 0;
+      const flavor = this.shakeForm.get('flavor')?.value;
+      const consistency = this.shakeForm.get('consistency')?.value;
+      const toppings = this.shakeForm.get('toppings')?.value;
   
-      let totalPrice = flavor + consistency + toppings;
+      const flavorPrice = this.flavors?.find(obj => obj['name'] === flavor)?.price ?? 0;
+      const consistencyPrice = this.consistencies?.find(obj => obj['name'] === consistency)?.price ?? 0;
+      const toppingsPrice = this.toppings?.find(obj => obj['name'] === toppings)?.price ?? 0;
+
+      let totalPrice = flavorPrice + consistencyPrice + toppingsPrice;
       totalPrice += 40;
   
       this.shakeForm.get('price')?.setValue(totalPrice);
+
+      this.shake.price = totalPrice;
+      this.shake.description = `${consistency} ${flavor} with ${toppings}`;
+      
+      // this.shakeChange.emit(this.shake);
     }
 
     addMilkshake(): void {

@@ -14,12 +14,14 @@ import { ShakeService } from 'src/app/services/shake.service';
 })
 export class OrderComponent implements OnInit {
   orderForm: FormGroup;
+  paymentForm: FormGroup;
   
   consistencies: Array<Consistency> = [];
   flavors: Array<Flavor> = [];
   toppings: Array<Topping> = [];
   shakes: Array<OrderItem> = [];
   locations: Array<string> = ['Rivonia', 'Woodmead', 'Waterfront', 'Waterkloof'];
+  complete: boolean = false;
 
   constructor( 
     private formBuilder: FormBuilder,
@@ -31,7 +33,12 @@ export class OrderComponent implements OnInit {
         this.orderForm = this.formBuilder.group({
           location: ['', Validators.required],
           time: ['', Validators.required],
-          amount: [0, [Validators.required, Validators.max(10), Validators.min(0)]],
+          amount: [0, [Validators.required, Validators.max(10), Validators.min(1)]],
+        });
+
+        this.paymentForm = this.formBuilder.group({
+          discount: [''],
+          totalAmount: [''],
         });
     }
 
@@ -79,5 +86,9 @@ export class OrderComponent implements OnInit {
         this.shakes.pop();
       }
     }
+  }
+
+  placeOrder(): void {
+
   }
 }

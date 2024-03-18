@@ -32,9 +32,9 @@
 
           <!-- Amount input -->
           <div class="form-check mb-4 mx-4">
-            <input class="form-control" type="text" value="" id="amount" formControlName="amount" />
+            <input class="form-control" type="text" value="" id="amount" formControlName="amount" placeholder="Number of drinks" />
             <label class="form-label" for="amount">
-              Amount
+              Number of Drinks Required
             </label>
             <div *ngIf="orderForm.get('amount')?.invalid && (orderForm.get('amount')?.dirty || orderForm.get('amount')?.touched)" class="invalid">
               <div *ngIf="orderForm.get('amount')?.invalid">Invalid amount, must be between 1 and 10.</div>
@@ -63,9 +63,48 @@
         <app-milkshake-form [flavors]="flavors" [toppings]="toppings" [consistencies]="consistencies" 
           [(shake)]="shakes[i]"></app-milkshake-form>
       </div>
-
     </div>
   </div>
-
   {{ shakes | json }}
+</section>
+<section>
+  <div class="container-fluid h-custom">
+    <div class="col-md-8 offset-xl-2">
+      <form [formGroup]="paymentForm" (ngSubmit)="placeOrder()">
+        
+        <div class="d-flex flex-row align-items-center justify-content-center">
+          
+          <!-- Discount input -->
+          <div class="form-check mb-4 mx-4">
+            <fieldset disabled>
+              <input class="form-control" type="text" value="" id="discount" formControlName="discount" placeholder="Discount" />
+              <label class="form-label" for="discount">
+                Frequent Customer Discount
+              </label>
+            </fieldset>
+          </div>
+
+          <!-- Total Amount input -->
+          <div class="form-check mb-4 mx-4">
+            <fieldset disabled>
+              <input class="form-control" type="text" value="" id="totalAmount" formControlName="totalAmount" placeholder="Total" />
+              <label class="form-label" for="totalAmount">
+                Total Amount for order (VAT incl.)
+              </label>
+              </fieldset>
+          </div>
+
+        </div>
+        
+        <div class="d-flex flex-row align-items-center justify-content-center">
+          <div class="text-center text-lg-start mb-4">
+            <button type="submit" class="btn btn-primary btn-lg"
+            [disabled]="!complete"
+              style="padding-left: 2.5rem; padding-right: 2.5rem;">Continue</button>
+          </div>
+        </div>
+
+      </form>
+      </div>
+  </div>
 </section>
