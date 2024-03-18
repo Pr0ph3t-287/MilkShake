@@ -11,6 +11,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { OrderComponent } from './pages/order/order.component';
+import { ShakeService } from './services/shake.service';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { OrderComponent } from './pages/order/order.component';
   ],
   providers: [
     AuthService,
+    ShakeService,
   ],
   bootstrap: [AppComponent]
 })
