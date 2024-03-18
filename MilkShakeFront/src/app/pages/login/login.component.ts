@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import * as bcrypt from 'bcryptjs';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private authService: AuthService,
     ) {       
         // Initialize the FormGroup with form controls and validation
         this.loginForm = this.formBuilder.group({
@@ -32,16 +33,17 @@ export class LoginComponent implements OnInit {
   async login(): Promise<void> {
     let email = this.loginForm.get('email')?.value,
         password = this.loginForm.get('password')?.value;
-    console.log(email, password);
 
-    const hashedPassword = await this.hashPassword(password);
+    this.authService.login(email, password).subscribe(
+      (response) => {
+        console.log('Response:', response);
 
-    console.log(hashedPassword);
-  }
-
-  async hashPassword(password: string): Promise<string> {
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
-    return hashedPassword;
+        if (response) {
+          this.router.navigate(["/order"]);
+        }
+      },
+      (error) => {
+        console.error('Error:', error);
+      });
   }
 }
