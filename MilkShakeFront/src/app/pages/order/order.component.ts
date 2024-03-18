@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { Consistency } from 'src/app/models/consistency.model';
 import { Flavor } from 'src/app/models/flavor.model';
+import { OrderItem } from 'src/app/models/order-item.model';
 import { Topping } from 'src/app/models/topping.model';
 import { ShakeService } from 'src/app/services/shake.service';
 
@@ -12,12 +13,13 @@ import { ShakeService } from 'src/app/services/shake.service';
   styleUrls: ['./order.component.scss']
 })
 export class OrderComponent implements OnInit {
-  loginForm: FormGroup;
-  currentYear: number = Date.now();
+  orderForm: FormGroup;
+  
   consistencies: Array<Consistency> = [];
   flavors: Array<Flavor> = [];
   toppings: Array<Topping> = [];
-  shakes: Array<string> = [];
+  shakes: Array<OrderItem> = [];
+  locations: Array<string> = ['Rivonia', 'Woodmead', 'Waterfront', 'Waterkloof'];
 
   constructor( 
     private formBuilder: FormBuilder,
@@ -26,19 +28,11 @@ export class OrderComponent implements OnInit {
     private shakeService: ShakeService,
     ) {       
         // Initialize the FormGroup with form controls and validation
-        this.loginForm = this.formBuilder.group({
-          email: ['', Validators.required],
-          password: ['', Validators.required],
-          consistency: [[]],
-          flavor: [[]],
-          toppings: [[]], // Define toppings control as an array
-          
+        this.orderForm = this.formBuilder.group({
+          location: ['', Validators.required],
+          time: ['', Validators.required],
+          amount: [0, [Validators.required, Validators.max(10), Validators.min(0)]],
         });
-
-        for (let i = 0; i < 10; i++) {
-          this.shakes.push("milkshake");
-        }
-        
     }
 
 
@@ -72,7 +66,18 @@ export class OrderComponent implements OnInit {
   }
 
 
-  login(): void {
+  createOrder(): void {
+    let amount = this.orderForm.get('amount')?.value;
 
+    if (amount > this.shakes.length) {
+      while (amount > this.shakes.length) {
+        const item: OrderItem = {} as OrderItem;
+        this.shakes.push(item);
+      }
+    } else if (amount < this.shakes.length) {
+      while (amount < this.shakes.length) {
+        this.shakes.pop();
+      }
+    }
   }
 }

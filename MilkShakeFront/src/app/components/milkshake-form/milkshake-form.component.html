@@ -6,7 +6,7 @@
 
       <!-- Flavor input -->
       <div class="form-outline mb-3">
-        <select id="flavor" class="form-control form-select form-select-sm" formControlName="flavor" aria-label=".form-select-sm example">
+        <select id="flavor" class="form-control form-select form-select-sm" formControlName="flavor" aria-label=".form-select-sm example" required>
           <option value="" selected disabled>Choose flavor</option>
           <option *ngFor="let flavor of flavors" [value]="flavor.name">{{ flavor.name }}</option>
         </select>
@@ -15,7 +15,7 @@
 
       <!-- Consistency input -->
       <div class="form-outline mb-3">
-        <select id="consistency" class="form-control form-select form-select-sm" formControlName="consistency" aria-label=".form-select-sm example">
+        <select id="consistency" class="form-control form-select form-select-sm" formControlName="consistency" aria-label=".form-select-sm example" required>
           <option value="" selected disabled>Choose consistency</option>
           <option *ngFor="let consistency of consistencies" [value]="consistency.name">{{ consistency.name }}</option>
         </select>
@@ -24,12 +24,28 @@
 
       <!-- Topping input -->
       <div class="form-outline mb-3">
-        <select id="toppings" class="form-control form-select form-select-sm" formControlName="toppings" aria-label=".form-select-sm example">
+        <select id="toppings" class="form-control form-select form-select-sm" formControlName="toppings" aria-label=".form-select-sm example" required>
           <option value="" selected disabled>Choose toppings</option>
           <option *ngFor="let topping of toppings" [value]="topping.name">{{ topping.name }}</option>
         </select>
         <label class="form-label" for="toppings">Toppings</label>
       </div>
+
+      <!-- Price input -->
+      <div class="form-outline mb-3">
+        <fieldset disabled>
+          <input matinput type="text" id="price" class="form-control form-control-sm"
+            placeholder="Price for drink" formControlName="price" />
+          <label class="form-label" for="price">Price for Drink</label>
+        </fieldset>
+      </div>
+
+      <div class="text-center text-lg-start">
+        <button type="submit" class="btn btn-primary btn-lg"
+        [disabled]="shakeForm.get('flavor')?.invalid||shakeForm.get('consistency')?.invalid"
+          style="padding-left: 2.5rem; padding-right: 2.5rem;">Done</button>
+      </div>
+
     </div>
   </form>
 </div>
