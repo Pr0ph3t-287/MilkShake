@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { Topping } from '../models/topping.model';
 import { Flavor } from '../models/flavor.model';
 import { Consistency } from '../models/consistency.model';
+import { Order } from '../models/order.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,5 +24,10 @@ export class ShakeService {
 
   getToppings(): Observable<Topping[]> {
     return this.http.get<Topping[]>(`${this.apiUrl}/topping`);
+  }
+
+  postOrder(order: Order): Observable<Order> {
+    const body = order;
+    return this.http.post<Order>(`${this.apiUrl}/order`, body);
   }
 }

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Consistency } from 'src/app/models/consistency.model';
 import { Flavor } from 'src/app/models/flavor.model';
 import { OrderItem } from 'src/app/models/order-item.model';
+import { Order } from 'src/app/models/order.model';
 import { Topping } from 'src/app/models/topping.model';
 import { ShakeService } from 'src/app/services/shake.service';
 
@@ -22,7 +23,8 @@ export class OrderComponent implements OnInit {
   shakes: Array<OrderItem> = [];
   locations: Array<string> = ['Rivonia', 'Woodmead', 'Waterfront', 'Waterkloof'];
   complete: boolean = false;
-
+  order: Order = {} as Order;
+  
   constructor( 
     private formBuilder: FormBuilder,
     private router: Router,
@@ -88,7 +90,28 @@ export class OrderComponent implements OnInit {
     }
   }
 
-  placeOrder(): void {
+  calculateDiscount(): void {
+    if (this.shakes.length > 3 /* && orders for userID > 2 */) {
+      // 10% off
+    } else if (this.shakes.length > 5 /* && orders for userID > 4 */) {
+      // 20% off
+    } else if (this.shakes.length > 7 /* && orders for userID > 6 */) {
+      // 30% off
+    }
+  }
 
+  placeOrder(): void {
+    this.order.totalAmount = this.paymentForm.get('totalAmount')?.value;
+    this.order.userId = 1; // FIX THIS
+    this.shakeService.postOrder(this.order).subscribe(
+      (response) => {
+        console.log('Response:', response);
+        this.order = response;
+      },
+      (error) => {
+        console.error('Error:', error);
+      });
+
+      // use this.order.orderId to submit orderItems
   }
 }
