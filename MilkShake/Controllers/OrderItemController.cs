@@ -12,13 +12,11 @@ namespace MilkShake.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         IRepository<OrderItem> orderItemRepository;
-        Service service;
 
         public OrderItemController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
             orderItemRepository = new OrderItemRepository(_unitOfWork);
-            service = new Service(unitOfWork);
         }
 
         [HttpGet]

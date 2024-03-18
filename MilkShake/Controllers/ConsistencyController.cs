@@ -12,13 +12,11 @@ namespace MilkShake.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         IRepository<Consistency> consistencyRepository;
-        Service service;
 
         public ConsistencyController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
             consistencyRepository = new ConsistencyRepository(_unitOfWork);
-            service = new Service(unitOfWork);
         }
 
         [HttpGet]

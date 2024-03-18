@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MilkShake.Data;
+using MilkShake.Repository;
 using MilkShake.UnitOfWork;
 using Swashbuckle.AspNetCore;
 
@@ -28,6 +29,8 @@ builder.Services.AddCors(
 
 // Add services to the container.
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+builder.Services.AddScoped<UserRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

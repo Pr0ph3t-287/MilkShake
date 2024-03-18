@@ -12,13 +12,11 @@ namespace MilkShake.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         IRepository<Topping> toppingRepository;
-        Service service;
 
         public ToppingController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
             toppingRepository = new ToppingRepository(_unitOfWork);
-            service = new Service(unitOfWork);
         }
 
         [HttpGet]
