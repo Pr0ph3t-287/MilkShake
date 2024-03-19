@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MilkshakeConfig } from 'src/app/models/config.model';
 import { Consistency } from 'src/app/models/consistency.model';
 import { Flavor } from 'src/app/models/flavor.model';
 import { OrderItem } from 'src/app/models/order-item.model';
@@ -18,6 +19,7 @@ export class OrderComponent implements OnInit {
   orderForm: FormGroup;
   paymentForm: FormGroup;
   currentUser: User = {} as User;
+  config: MilkshakeConfig;
   
   consistencies: Array<Consistency> = [];
   flavors: Array<Flavor> = [];
@@ -26,18 +28,20 @@ export class OrderComponent implements OnInit {
   locations: Array<string> = ['Rivonia', 'Woodmead', 'Waterfront', 'Waterkloof'];
   complete: boolean = false;
   order: Order = {} as Order;
+  orderHistoryCount: number = 0;
   
   constructor( 
     private formBuilder: FormBuilder,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private shakeService: ShakeService,
-    ) {       
-        // Initialize the FormGroup with form controls and validation
+    ) {
+      this.config = JSON.parse(localStorage['config']) as MilkshakeConfig;
+
         this.orderForm = this.formBuilder.group({
           location: ['', Validators.required],
           time: ['', Validators.required],
-          amount: [0, [Validators.required, Validators.max(10), Validators.min(1)]],
+          amount: [0, [Validators.required, Validators.max(this.config.maxShakesPerOrder!), Validators.min(1)]],
         });
 
         this.paymentForm = this.formBuilder.group({
@@ -45,7 +49,6 @@ export class OrderComponent implements OnInit {
           totalAmount: [''],
         });
     }
-
 
   ngOnInit(): void {
     this.currentUser = new User(JSON.parse(localStorage['currentUser']));
@@ -76,6 +79,16 @@ export class OrderComponent implements OnInit {
           (error) => {
             console.error('Error:', error);
           });
+
+          this.shakeService.getOrderByUserId(this.currentUser.userId).subscribe(
+            (response) => {
+              console.log('Response:', response);
+              
+              this.orderHistoryCount = response.length;
+            },
+            (error) => {
+              console.error('Error:', error);
+            });
   }
 
   createOrder(): void {
@@ -114,15 +127,18 @@ export class OrderComponent implements OnInit {
   }
 
   calculateDiscount(total: number): number {
-    if (this.shakes.length > 2 /* && orders for userID > 1 */) {
-      // 10% off
-      total *= .1;
-    } else if (this.shakes.length > 4 /* && orders for userID > 3*/) {
-      // 20% off
-      total *= .2;
-    } else if (this.shakes.length > 6 /* && orders for userID > 5 */) {
+    if (this.shakes.length >= this.config.discount3MinShakes! 
+      && this.orderHistoryCount >= this.config.discount3MinOrders!) {
       // 30% off
       total *= .3;
+    } else if (this.shakes.length >= this.config.discount2MinShakes! 
+      && this.orderHistoryCount >= this.config.discount2MinOrders!) {
+      // 20% off
+      total *= .2;
+    } else if (this.shakes.length >= this.config.discount1MinShakes! 
+      && this.orderHistoryCount >= this.config.discount1MinOrders!) {
+      // 10% off
+      total *= .1;
     } else {
       total *= .0;
     }
@@ -152,7 +168,7 @@ export class OrderComponent implements OnInit {
           (response) => {
             console.log('Response:', response);
 
-            this.router.navigate(['/payment'], { queryParams: { amount: this.order.totalAmount, complete: false } });
+            this.router.navigate(['/payment'], { queryParams: { amount: this.order.totalAmount } });
           },
           (error) => {
             console.error('Error:', error);

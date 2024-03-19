@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MilkshakeConfig } from 'src/app/models/config.model';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
+import { ShakeService } from 'src/app/services/shake.service';
 
 @Component({
   selector: 'app-login',
@@ -14,12 +16,14 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   currentYear: number = Date.now();
   loginFailed: boolean = false;
+  config: MilkshakeConfig = {} as MilkshakeConfig;
 
   constructor( 
     private formBuilder: FormBuilder,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
+    private shakeService: ShakeService
     ) {       
         // Initialize the FormGroup with form controls and validation
         this.loginForm = this.formBuilder.group({
@@ -29,6 +33,15 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit(): void {
+      this.shakeService.getConfig().subscribe(
+        (response) => {
+          console.log('Response:', response);
+          this.config = response;
+          localStorage.setItem('config', JSON.stringify(this.config));
+        },
+        (error) => {
+          console.error('Error:', error);
+        });
     }
 
 

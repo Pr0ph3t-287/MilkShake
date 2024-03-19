@@ -5,7 +5,7 @@ import { LoginComponent } from "./pages/login/login.component";
 import { RouterModule, Routes } from '@angular/router';
 import { RegisterComponent } from './pages/register/register.component';
 import { OrderComponent } from './pages/order/order.component';
-import { PaymentComponent } from './pages/payment/paymentcomponent';
+import { PaymentComponent } from './pages/payment/payment.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },

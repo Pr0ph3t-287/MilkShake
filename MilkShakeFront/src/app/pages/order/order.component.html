@@ -37,7 +37,7 @@
               Number of Drinks Required
             </label>
             <div *ngIf="orderForm.get('amount')?.invalid && (orderForm.get('amount')?.dirty || orderForm.get('amount')?.touched)" class="invalid">
-              <div *ngIf="orderForm.get('amount')?.invalid">Invalid amount, must be between 1 and 10.</div>
+              <div *ngIf="orderForm.get('amount')?.invalid">Invalid amount, must be between 1 and {{config.maxShakesPerOrder}}.</div>
             </div>
           </div>
 
