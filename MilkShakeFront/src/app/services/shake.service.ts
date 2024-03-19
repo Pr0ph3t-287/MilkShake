@@ -6,6 +6,7 @@ import { Topping } from '../models/topping.model';
 import { Flavor } from '../models/flavor.model';
 import { Consistency } from '../models/consistency.model';
 import { Order } from '../models/order.model';
+import { OrderItem } from '../models/order-item.model';
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +30,10 @@ export class ShakeService {
   postOrder(order: Order): Observable<Order> {
     const body = order;
     return this.http.post<Order>(`${this.apiUrl}/order`, body);
+  }
+
+  postOrderItems(orderItems: Array<OrderItem>): Observable<Array<OrderItem>> {
+    const body = orderItems;
+    return this.http.post<Array<OrderItem>>(`${this.apiUrl}/OrderItem/CreateOrderItems`, body);
   }
 }

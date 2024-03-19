@@ -103,15 +103,26 @@ export class OrderComponent implements OnInit {
   placeOrder(): void {
     this.order.totalAmount = this.paymentForm.get('totalAmount')?.value;
     this.order.userId = 1; // FIX THIS
+
     this.shakeService.postOrder(this.order).subscribe(
       (response) => {
         console.log('Response:', response);
         this.order = response;
+
+        this.shakes.forEach(shake => {
+          shake.orderId = this.order.orderId ?? 0;
+        });
+
+        this.shakeService.postOrderItems(this.shakes).subscribe(
+          (response) => {
+            console.log('Response:', response);
+          },
+          (error) => {
+            console.error('Error:', error);
+          });
       },
       (error) => {
         console.error('Error:', error);
       });
-
-      // use this.order.orderId to submit orderItems
   }
 }

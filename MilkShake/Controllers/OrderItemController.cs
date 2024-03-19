@@ -52,5 +52,28 @@ namespace MilkShake.Controllers
             var orderItems = await orderItemRepository.Update(id, OrderItem);
             return orderItems;
         }
+
+        [HttpPost("CreateOrderItems")]
+        public async Task<ActionResult<IEnumerable<OrderItem>>> CreateOrderItems([FromBody] IEnumerable<OrderItem> orderItems)
+        {
+            var createdOrderItems = new List<ActionResult<OrderItem>>();
+
+            foreach (var orderItem in orderItems)
+            {
+                var createdOrderItem = await orderItemRepository.Create(orderItem);
+                if (createdOrderItem != null)
+                {
+                    createdOrderItems.Add(createdOrderItem);
+                }
+            }
+
+            if (!createdOrderItems.Any())
+            {
+                return NotFound("None of the order items were created.");
+            }
+
+            return Ok(createdOrderItems);
+        }
     }
+
 }
