@@ -41,6 +41,7 @@ export class LoginComponent implements OnInit {
         console.log('Response:', response);
 
         let user: User = response;
+        localStorage.setItem('currentUser', JSON.stringify(user));
         
         if (response !== null) {
           this.router.navigate(["/order"]);

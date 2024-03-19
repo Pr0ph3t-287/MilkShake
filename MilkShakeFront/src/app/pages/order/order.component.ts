@@ -6,6 +6,7 @@ import { Flavor } from 'src/app/models/flavor.model';
 import { OrderItem } from 'src/app/models/order-item.model';
 import { Order } from 'src/app/models/order.model';
 import { Topping } from 'src/app/models/topping.model';
+import { User } from 'src/app/models/user.model';
 import { ShakeService } from 'src/app/services/shake.service';
 
 @Component({
@@ -16,6 +17,7 @@ import { ShakeService } from 'src/app/services/shake.service';
 export class OrderComponent implements OnInit {
   orderForm: FormGroup;
   paymentForm: FormGroup;
+  currentUser: User = {} as User;
   
   consistencies: Array<Consistency> = [];
   flavors: Array<Flavor> = [];
@@ -46,6 +48,8 @@ export class OrderComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.currentUser = new User(JSON.parse(localStorage['currentUser']));
+
     this.shakeService.getConsistencies().subscribe(
       (response) => {
         console.log('Response:', response);
@@ -110,13 +114,13 @@ export class OrderComponent implements OnInit {
   }
 
   calculateDiscount(total: number): number {
-    if (this.shakes.length > 2 /* && orders for userID > 2 */) {
+    if (this.shakes.length > 2 /* && orders for userID > 1 */) {
       // 10% off
       total *= .1;
-    } else if (this.shakes.length > 4 /* && orders for userID > 4 */) {
+    } else if (this.shakes.length > 4 /* && orders for userID > 3*/) {
       // 20% off
       total *= .2;
-    } else if (this.shakes.length > 6 /* && orders for userID > 6 */) {
+    } else if (this.shakes.length > 6 /* && orders for userID > 5 */) {
       // 30% off
       total *= .3;
     } else {
@@ -128,7 +132,7 @@ export class OrderComponent implements OnInit {
 
   placeOrder(): void {
     this.order.totalAmount = this.paymentForm.get('totalAmount')?.value;
-    this.order.userId = 1; // FIX THIS
+    this.order.userId = this.currentUser.userId;
     this.order.orderDate = new Date(Date.now());
     this.order.created_At = new Date(Date.now());
     this.order.updated_At = new Date(Date.now());
@@ -147,6 +151,8 @@ export class OrderComponent implements OnInit {
         this.shakeService.postOrderItems(this.shakes).subscribe(
           (response) => {
             console.log('Response:', response);
+
+            this.router.navigate(['/payment'], { queryParams: { amount: this.order.totalAmount, complete: false } });
           },
           (error) => {
             console.error('Error:', error);
