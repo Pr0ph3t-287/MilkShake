@@ -9,6 +9,7 @@ namespace MilkShake.Data
 {
     public class MilkShakeDbContext(DbContextOptions<MilkShakeDbContext> options) : DbContext(options)
     {
+        public DbSet<MilkshakeConfig> Configs { get; set; }
         public DbSet<Consistency> Consistencies { get; set; }
         public DbSet<Flavor> Flavors { get; set; }
         public DbSet<Order> Orders { get; set; }
