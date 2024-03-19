@@ -74,7 +74,6 @@ export class OrderComponent implements OnInit {
           });
   }
 
-
   createOrder(): void {
     let amount = this.orderForm.get('amount')?.value;
 
@@ -90,14 +89,39 @@ export class OrderComponent implements OnInit {
     }
   }
 
-  calculateDiscount(): void {
+  calculateTotal(): void {
+    let total = 0;
+    this.shakes.forEach(shake =>{
+      if (shake.quantity === 1) {
+        total += shake.price;
+        this.complete = true;
+      } else {
+        this.complete = false;
+      }
+    });
+
+    const discount = this.calculateDiscount(total); 
+
+    this.paymentForm.get('discount')?.setValue(discount);
+
+    this.paymentForm.get('totalAmount')?.setValue(total - discount);
+  }
+
+  calculateDiscount(total: number): number {
     if (this.shakes.length > 3 /* && orders for userID > 2 */) {
       // 10% off
+      total *= .1;
     } else if (this.shakes.length > 5 /* && orders for userID > 4 */) {
       // 20% off
+      total *= .2;
     } else if (this.shakes.length > 7 /* && orders for userID > 6 */) {
       // 30% off
+      total *= .3;
+    } else {
+      total *= .0;
     }
+
+    return total;
   }
 
   placeOrder(): void {

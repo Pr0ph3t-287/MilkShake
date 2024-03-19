@@ -61,7 +61,7 @@
       <!-- Repeat this div as needed to fill empty space -->
       <div *ngFor="let shake of shakes; let i = index" class="col-sm-3">
         <app-milkshake-form [flavors]="flavors" [toppings]="toppings" [consistencies]="consistencies" 
-          [(shake)]="shakes[i]"></app-milkshake-form>
+          [(shake)]="shakes[i]" [calculateTotal]="calculateTotal.bind(this)"></app-milkshake-form>
       </div>
     </div>
   </div>

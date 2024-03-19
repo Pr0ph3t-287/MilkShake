@@ -18,6 +18,7 @@ export class MilkshakeFormComponent {
   @Input() toppings!: Array<Topping>;
   @Input() shake!: OrderItem;
   @Output() shakeChange = new EventEmitter<OrderItem>();
+  @Input() calculateTotal!: () => void;
 
   shakeForm: FormGroup;
 
@@ -64,6 +65,8 @@ export class MilkshakeFormComponent {
     }
 
     addMilkshake(): void {
+      this.shake.quantity = 1;
       this.shakeChange.emit(this.shake);
+      this.calculateTotal();
     }
 }

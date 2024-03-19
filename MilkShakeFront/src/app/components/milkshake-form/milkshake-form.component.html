@@ -6,29 +6,35 @@
 
       <!-- Flavor input -->
       <div class="form-outline mb-3">
-        <select id="flavor" class="form-control form-select form-select-sm" formControlName="flavor" aria-label=".form-select-sm example" required>
-          <option value="" selected disabled>Choose flavor</option>
-          <option *ngFor="let flavor of flavors" [value]="flavor.name">{{ flavor.name }}</option>
-        </select>
-        <label class="form-label" for="flavor">Flavor</label>
+        <fieldset [disabled]="shake.quantity===1">
+          <select id="flavor" class="form-control form-select form-select-sm" formControlName="flavor" aria-label=".form-select-sm example" required>
+            <option value="" selected disabled>Choose flavor</option>
+            <option *ngFor="let flavor of flavors" [value]="flavor.name">{{ flavor.name }}</option>
+          </select>
+          <label class="form-label" for="flavor">Flavor</label>
+        </fieldset>
       </div>
 
       <!-- Consistency input -->
       <div class="form-outline mb-3">
-        <select id="consistency" class="form-control form-select form-select-sm" formControlName="consistency" aria-label=".form-select-sm example" required>
-          <option value="" selected disabled>Choose consistency</option>
-          <option *ngFor="let consistency of consistencies" [value]="consistency.name">{{ consistency.name }}</option>
-        </select>
-        <label class="form-label" for="consistency">Thick or Not</label>
+        <fieldset [disabled]="shake.quantity===1">
+          <select id="consistency" class="form-control form-select form-select-sm" formControlName="consistency" aria-label=".form-select-sm example" required>
+            <option value="" selected disabled>Choose consistency</option>
+            <option *ngFor="let consistency of consistencies" [value]="consistency.name">{{ consistency.name }}</option>
+          </select>
+          <label class="form-label" for="consistency">Thick or Not</label>
+        </fieldset>
       </div>
 
       <!-- Topping input -->
       <div class="form-outline mb-3">
-        <select id="toppings" class="form-control form-select form-select-sm" formControlName="toppings" aria-label=".form-select-sm example" required>
-          <option value="" selected disabled>Choose toppings</option>
-          <option *ngFor="let topping of toppings" [value]="topping.name">{{ topping.name }}</option>
-        </select>
-        <label class="form-label" for="toppings">Toppings</label>
+        <fieldset [disabled]="shake.quantity===1">
+          <select id="toppings" class="form-control form-select form-select-sm" formControlName="toppings" aria-label=".form-select-sm example" required>
+            <option value="" selected disabled>Choose toppings</option>
+            <option *ngFor="let topping of toppings" [value]="topping.name">{{ topping.name }}</option>
+          </select>
+          <label class="form-label" for="toppings">Toppings</label>
+        </fieldset>
       </div>
 
       <!-- Price input -->
@@ -42,7 +48,7 @@
 
       <div class="text-center text-lg-start">
         <button type="submit" class="btn btn-primary btn-lg"
-        [disabled]="shakeForm.get('flavor')?.invalid||shakeForm.get('consistency')?.invalid"
+        [disabled]="shakeForm.get('flavor')?.invalid||shakeForm.get('consistency')?.invalid||shakeForm.get('toppings')?.invalid||shake.quantity===1"
           style="padding-left: 2.5rem; padding-right: 2.5rem;">Done</button>
       </div>
 
