@@ -87,6 +87,8 @@ export class OrderComponent implements OnInit {
         this.shakes.pop();
       }
     }
+
+    this.calculateTotal();
   }
 
   calculateTotal(): void {
@@ -108,13 +110,13 @@ export class OrderComponent implements OnInit {
   }
 
   calculateDiscount(total: number): number {
-    if (this.shakes.length > 3 /* && orders for userID > 2 */) {
+    if (this.shakes.length > 2 /* && orders for userID > 2 */) {
       // 10% off
       total *= .1;
-    } else if (this.shakes.length > 5 /* && orders for userID > 4 */) {
+    } else if (this.shakes.length > 4 /* && orders for userID > 4 */) {
       // 20% off
       total *= .2;
-    } else if (this.shakes.length > 7 /* && orders for userID > 6 */) {
+    } else if (this.shakes.length > 6 /* && orders for userID > 6 */) {
       // 30% off
       total *= .3;
     } else {
@@ -127,6 +129,9 @@ export class OrderComponent implements OnInit {
   placeOrder(): void {
     this.order.totalAmount = this.paymentForm.get('totalAmount')?.value;
     this.order.userId = 1; // FIX THIS
+    this.order.orderDate = new Date(Date.now());
+    this.order.created_At = new Date(Date.now());
+    this.order.updated_At = new Date(Date.now());
 
     this.shakeService.postOrder(this.order).subscribe(
       (response) => {
@@ -135,6 +140,8 @@ export class OrderComponent implements OnInit {
 
         this.shakes.forEach(shake => {
           shake.orderId = this.order.orderId ?? 0;
+          shake.createdAt = new Date(Date.now());
+          shake.updatedAt = new Date(Date.now());
         });
 
         this.shakeService.postOrderItems(this.shakes).subscribe(

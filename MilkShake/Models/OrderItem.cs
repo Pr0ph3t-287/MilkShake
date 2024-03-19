@@ -15,8 +15,8 @@ namespace MilkShake.Models
         [Column("order_id")]
         public int OrderId { get; set; }
 
-        [ForeignKey("OrderId")]
-        public Order Order { get; set; }
+        //[ForeignKey("OrderId")]
+        //public Order Order { get; set; }
 
         [Column("description")]
         public string Description { get; set; }

@@ -15,8 +15,8 @@ namespace MilkShake.Models
         [Column("user_id")]
         public int UserId { get; set; }
 
-        [ForeignKey("UserId")]
-        public User User { get; set; }
+        //[ForeignKey("UserId")]
+        //public User User { get; set; }
 
         [Column("order_date")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
