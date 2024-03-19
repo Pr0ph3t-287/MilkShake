@@ -28,7 +28,7 @@ namespace MilkShake.Services
             _userRepository = userRepository;
         }
 
-        public async Task<bool> Login(string email, string password)
+        public async Task<User> Login(string email, string password)
         {
             var user = await _userRepository.GetUserByEmail(email);
             string hashedPassword = HashPassword(password); // Hash the password
@@ -37,7 +37,14 @@ namespace MilkShake.Services
             string hashedPassword2 = actual.PasswordHash;
 
             // Simulating login attempt with the same password
-            return VerifyPassword(password, hashedPassword2);
+            if (VerifyPassword(password, hashedPassword2))
+            {
+                return actual;
+            } 
+            else
+            {
+                return null;
+            }
         }
 
         private static string HashPassword(string password)
