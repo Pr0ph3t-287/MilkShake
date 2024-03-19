@@ -14,6 +14,7 @@ import { OrderComponent } from './pages/order/order.component';
 import { ShakeService } from './services/shake.service';
 import { MilkshakeFormComponent } from './components/milkshake-form/milkshake-form.component';
 import { PaymentComponent } from './pages/payment/payment.component';
+import { EmailService } from './services/email.service';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { PaymentComponent } from './pages/payment/payment.component';
   providers: [
     AuthService,
     ShakeService,
+    EmailService,
   ],
   bootstrap: [AppComponent]
 })
